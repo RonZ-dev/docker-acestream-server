@@ -1,32 +1,29 @@
-FROM debian:10-slim
+FROM python:3.8-slim
 LABEL maintainer="RonZ-dev"
-
-ARG DEBIAN_FRONTEND="noninteractive"
 
 # install packages
 RUN apt-get update && apt-get --yes upgrade
 
 RUN apt-get --no-install-recommends --yes install \
-	wget \
-	libpython2.7 \
-	net-tools \
-	python-apsw \
-	python-lxml \
-	python-m2crypto \
-	python-pkg-resources \
-	python-pip \
-	python-setuptools \
-	build-essential \
-	ca-certificates
+    wget \
+    ca-certificates
 
-# clean up
+# Clean up
 RUN apt-get clean && \
-	rm --force --recursive /var/lib/apt/lists
+    rm --force --recursive /var/lib/apt/lists
 
-#adding python modules
-RUN pip install requests \
-	pycryptodome \
-	isodate
+#upgrade pip
+RUN pip3 install --upgrade pip
+
+# Adding Python modules
+RUN pip3 install requests \
+    pycryptodome \
+    isodate \
+    apsw \
+    lxml \
+    pynacl
+
+WORKDIR ace
 
 # install server
 ARG ACE_STREAM_VERSION
@@ -34,9 +31,11 @@ ENV ACE_STREAM_VERSION "$ACE_STREAM_VERSION"
 
 RUN echo "Building AceStream: $ACE_STREAM_VERSION"
 
-RUN wget -O - https://download.acestream.media/linux/acestream_${ACE_STREAM_VERSION}_x86_64.tar.gz | tar -xz -C /
+RUN wget https://download.acestream.media/linux/acestream_${ACE_STREAM_VERSION}.tar.gz && \
+    tar -xzf acestream_${ACE_STREAM_VERSION}.tar.gz && \
+    rm acestream_${ACE_STREAM_VERSION}.tar.gz
 
 EXPOSE 6878/tcp
 
-ENTRYPOINT ["/start-engine"]
-CMD ["--client-console", "@/acestream.conf"]
+ENTRYPOINT ["/ace/start-engine"]
+CMD ["--client-console", "@/ace/config/acestream.conf"]
