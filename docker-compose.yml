@@ -6,9 +6,11 @@ services:
     restart: always
     ports:
       - "${ACE_API_PORT}:6878"
+      - "8621:8621"
     volumes:
-      - ./config/acestream.conf:/acestream.conf
-      - ./logs:/logs
+      - ./config/acestream.conf:/ace/config/acestream.conf
+      - ./logs:/ace/logs
+      - "/etc/timezone:/etc/timezone:ro"
     env_file:
       - ./.env
     build:
