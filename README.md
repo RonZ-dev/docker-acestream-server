@@ -11,11 +11,9 @@ An [Ace Stream](http://www.acestream.org/) server Docker image.
 
 What this provides:
 
-- Dockerized Ace Stream server (version `3.1.74`) running under Debian 10 (Buster) slim.
-- Bash script to start server and present HTTP API endpoint to host.
-- Python playback script [`playstream.py`](playstream.py) instructing server to:
+- Dockerized Ace Stream server (version `3.1.75rc4`) running on docker container python 3.8-slim
+- Dockerized web server which provides acces to python playback script [`playstream.py`](playstream.py) instructing server to:
 	- Commence streaming of a given program ID.
-	- ...and optionally start a compatible media player (such as [VLC](https://www.videolan.org/vlc/)) to view stream.
 
 Since a single HTTP endpoint exposed from the Docker container controls the server _and_ provides the output stream, this provides one of the easier methods for playback of Ace Streams on traditionally unsupported operating systems such as macOS.
 
@@ -41,62 +39,16 @@ $ docker pull [todo]
 
 ## Usage
 
-Start the server via:
+Docker will start 2 containers:
+acestream-server and acestream-web
 
-```sh
-$ ./run.sh
-```
+- Browse to the webinterface, default port is 4000, and input the acestream ID into the webpage.
+- Server will respond with the http link (still needs to be fixed with external ip)
 
-For Linux hosts the alternative [`run-tmpfs.sh`](run-tmpfs.sh) is recommended, mounting the cache directory into a [temporary based `tmpfs`](run-tmpfs.sh#L12) file system. This saves thrashing of the file system as stream contents is written to disk - which does not seem possible to disable via server launch arguments.
 
-Server will now be available from `http://127.0.0.1:6878`:
+You can find acestream ID's here:
+https://acestreamsearch.net/en/
 
-```sh
-$ curl http://127.0.0.1:6878/webui/api/service?method=get_version
-# {"result": {"code": 3017400, "platform": "linux", "version": "3.1.74"}, "error": null}
-```
-
-A program ID can be started with [`playstream.py`](playstream.py):
-
-```sh
-$ ./playstream.py --help
-usage: playstream.py [-h] --ace-stream-pid HASH [--player PLAYER] [--progress]
-                     [--server HOSTNAME] [--port PORT]
-
-Instructs server to commence a given program ID. Will optionally execute a
-local media player once playback has started.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --ace-stream-pid HASH
-                        program ID to stream
-  --player PLAYER       media player to execute once stream active
-  --progress            continue to output stream statistics (connected
-                        peers/transfer rates) every 2 seconds
-  --server HOSTNAME     server hostname, defaults to 127.0.0.1
-  --port PORT           server HTTP API port, defaults to 6878
-```
-
-For example, to stream `PROGRAM_ID` and send playback to `vlc` when ready:
-
-```sh
-$ ./playstream.py \
-	--ace-stream-pid PROGRAM_ID \
-	--player /usr/bin/vlc \
-	--progress
-
-Awaiting successful connection to stream
-Waiting... [Peers: 5 // Down: 80KB // Up: 0KB]
-Waiting... [Peers: 40 // Down: 343KB // Up: 4KB]
-Ready!
-
-Playback available at [http://127.0.0.1/XXXX]
-Starting media player...
-
-Streaming... [Peers: 18 // Down: 467KB // Up: 16KB]
-```
-
-Send <kbd>Ctrl + C</kbd> to exit.
 
 ## Reference
 
