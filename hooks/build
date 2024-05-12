@@ -1,4 +1,0 @@
-#!/bin/bash -e
-
-export DOCKER_REPOSITORY=$DOCKER_REPO
-./build.sh
