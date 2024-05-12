@@ -2,7 +2,6 @@
 
 An [Ace Stream](http://www.acestream.org/) server Docker image.
 
-- 
 - [Overview](#overview)
 - [Building](#building)
 - [Usage](#usage)
