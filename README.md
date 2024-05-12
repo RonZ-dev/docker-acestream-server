@@ -67,7 +67,7 @@ $ docker run -d \
 4. Check it works
 
 ```sh
-$ curl curl http://127.0.0.1:6878/webui/api/service?method=get_version
+$ curl http://127.0.0.1:6878/webui/api/service?method=get_version
 # {"result": {"platform": "linux", "version": "3.2.3", "code": 3020300, "websocket_port": 42865}, "error": null}
 ```
 
