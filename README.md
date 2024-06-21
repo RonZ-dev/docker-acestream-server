@@ -11,7 +11,7 @@ An [Ace Stream](http://www.acestream.org/) server Docker image.
 
 What this provides:
 
-- Dockerized Ace Stream server (version `3.1.75rc4`) running on docker container python 3.8-slim
+- Dockerized Ace Stream server (version `3.2.3`) running on docker container python 3.8-slim
 - Dockerized web server which provides acces to python playback script [`playstream.py`](playstream.py) instructing server to:
 	- Commence streaming of a given program ID.
 
@@ -43,7 +43,10 @@ Docker will start 2 containers:
 acestream-server and acestream-web
 
 - Browse to the webinterface, default port is 4000, and input the acestream ID into the webpage.
+![image](https://github.com/RonZ-dev/docker-acestream-server/assets/66950018/903e3e3e-b5c1-4b87-869d-fcc091b2efab)
+
 - Server will respond with the http link (still needs to be fixed with external ip)
+![image](https://github.com/RonZ-dev/docker-acestream-server/assets/66950018/0d35fad2-db3e-40fd-8dfb-a64e26678b33)
 
 
 You can find acestream ID's here:
