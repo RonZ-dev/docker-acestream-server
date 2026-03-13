@@ -11,7 +11,7 @@ An [Ace Stream](http://www.acestream.org/) server Docker image.
 
 What this provides:
 
-- Dockerized Ace Stream server (version `3.2.3`) running on docker container python 3.8-slim
+- Dockerized Ace Stream server (version `3.2.11`) running on docker container python 3.10-slim
 - Dockerized web server which provides acces to python playback script [`playstream.py`](playstream.py) instructing server to:
 	- Commence streaming of a given program ID.
 
